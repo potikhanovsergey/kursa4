@@ -1,0 +1,25 @@
+{% extends 'kursovaya/base.html' %}
+
+
+{% block content %}
+    <section class="post-details">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <h1 class="post-details__title">{{ post.title }}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="post-details__info">
+                        <span class="post-details__author">{{ post.author }}</span>
+                        <span class="post-details__date">{{ post.date }}</span>
+                    </div>
+                    <p class="post-details__message">
+                        {{ post.message }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
