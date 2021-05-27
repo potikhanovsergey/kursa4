@@ -1,5 +1,7 @@
 @import '_variables.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+// BASE
 *, *::after, *::before {
   margin: 0;
   padding: 0;
@@ -21,12 +23,20 @@ html {
   font-family: 'Roboto', sans-serif;
 }
 
+body {
+  background-color: #F5F5DC;
+}
+
 ul {
   list-style: none;
 }
 
 h1 {
   text-align: center;
+}
+
+h1, h2, h3 {
+  font-weight: 400;
 }
 
 a {
@@ -47,6 +57,39 @@ a {
   right: 0;
   align-items: center;
 }
+
+.main-menu {
+  display: flex;
+  margin-bottom: 0;
+
+  &__link {
+    padding: 1.5rem 20px;
+    text-transform: uppercase;
+    &:hover {
+      color: $pink;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main-menu {
+    &__link {
+      padding: 1.5rem 7px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .main-menu {
+    margin: 0 auto;
+    padding: 0;
+    &__link {
+      padding: 1.5rem 5px;
+    }
+  }
+}
+
+//  BASE END
 
 .section-heading {
   text-align: center;
@@ -72,6 +115,7 @@ section {
   font-weight: 700;
   text-transform: uppercase;
   color: #000;
+  margin: 0 auto;
   &:hover {
     color: $black;
   }
@@ -84,18 +128,6 @@ section {
   }
 }
 
-.main-menu {
-  display: flex;
-  margin-bottom: 0;
-
-  &__link {
-    padding: 1.5rem 20px;
-    text-transform: uppercase;
-    &:hover {
-      color: $pink;
-    }
-  }
-}
 
 .colored {
   color: $pink;
@@ -129,9 +161,9 @@ section {
 
 .blog-to-post-link {
   &:hover {
-    color: $pink;
+    color: $black;
     >.post {
-      background-color: transparent;
+      background-color: darken($gray, 3%);
     }
   }
 }
@@ -169,12 +201,36 @@ section {
   }
 
   &__date {
-    color: lightgray;
+    color: gray;
   }
 
   &__message {
     font-size: 24px;
   }
 }
+
+.other-posts {
+  right: 10%;
+  width: 300px;
+  position: fixed;
+  top: 22%;
+  background-color: $gray;
+  padding: 10px 20px;
+  border-radius: 10px;
+  &__heading {
+    text-align: center;
+  }
+}
+
+
+@media (max-width: 991px) {
+  .other-posts {
+    position: static;
+    margin: 0 auto;
+  }
+}
+
+// POST_DETAIL END //
+
 
 

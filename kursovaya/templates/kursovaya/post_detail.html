@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-9 col-12 col-lg-6">
                     <div class="post-details__info">
                         <span class="post-details__author">{{ post.author }}</span>
                         <span class="post-details__date">{{ post.date }}</span>
@@ -21,5 +21,35 @@
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    {% if post.comments.all %}
+                        {% for comment in post.comments.all %}
+                            <div class="post-details__comment">
+                                <strong>{{ comment.author_name }} - {{ comment.date }}</strong>
+                                <p>{{ comment.message }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% include 'kursovaya/createComment.html' %}
+                </div>
+            </div>
+        </div>
     </section>
+
+    <div class="other-posts">
+        <h4 class="other-posts__heading">Другие посты</h4>
+        <ul class="other-posts__list">
+            {% for p in posts %}
+                <li class="other-posts__item">
+                    <a class="other-posts__link" href="{% url 'post_detail' p.id %}">{{ p.title }}</a>
+                </li>
+            {% endfor %}
+            <li class="other-posts__item">
+                <a href="{% url 'blog' %}" class="other-posts__link">Смотреть все</a>
+            </li>
+        </ul>
+
+    </div>
 {% endblock content %}

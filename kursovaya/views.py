@@ -1,7 +1,10 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
+
 # Create your views here.
-from .models import Post
+from .models import Post, Comment
+
+
 
 class HomeTemplateView(TemplateView):
     template_name = 'kursovaya/index.html'
@@ -17,9 +20,23 @@ class BlogTemplateView(ListView):
 class BlogDetailView(DetailView):
     model = Post
     template_name = 'kursovaya/post_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts'] = Post.objects.all()
+        return context
+
+class BlogCommentCreateView(CreateView):
+    model = Comment
+    fields = ['author_name', 'message']
+    template_name = 'kursovaya/createComment.html'
+
 
 class ContactsTemplateView(TemplateView):
     template_name = 'kursovaya/contacts.html'
+
+
+
+
 
 
 
