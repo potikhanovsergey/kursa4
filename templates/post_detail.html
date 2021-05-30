@@ -21,9 +21,13 @@
                 </div>
             </div>
         </div>
+
+{#                    {% include 'createComment.html' %}#}
+
         <div class="container">
             <div class="row">
-                <div class="col-6">
+                <div class="col-lg-8">
+                    <h2>Комментарии ({{ post_comments_count }})</h2>
                     {% if post.comments.all %}
                         {% for comment in post.comments.all %}
                             <div class="post-details__comment">
@@ -32,7 +36,15 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-                    {% include 'kursovaya/createComment.html' %}
+                    <form method="POST" action="{% url 'post_detail' post.pk %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form }}
+                        </div>
+                        <button class="btn btn-primary btn-block" type="submit">
+                            Отправить
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

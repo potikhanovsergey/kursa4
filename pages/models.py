@@ -16,7 +16,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author_name = models.TextField(max_length=30)
+    author_name = models.TextField(max_length=30, default='Гость')
     message = models.CharField(max_length=300)
     date = dateformat.format(timezone.now(), settings.DATE_FORMAT)
 
