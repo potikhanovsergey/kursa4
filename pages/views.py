@@ -30,9 +30,9 @@ class BlogDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         post = self.get_object()
         if request.method == 'POST' and 'send' in request.POST:
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                try:
+            try:
+                form = CommentForm(request.POST)
+                if form.is_valid():
                     form.instance.post_id = post
                     if (request.user.is_authenticated):
                         form.instance.user = request.user
@@ -40,8 +40,11 @@ class BlogDetailView(DetailView):
                         form.instance.user = User.objects.all().get(username="Гость")
                     form.save()
                     messages.success(request, 'Вы успешно добавили комментарий!')
-                except:
-                    messages.warning(request, 'Что-то пошло не так')
+                if (request.POST['message'].strip() == ''):
+                    messages.warning(request, 'Комментарий не может быть пустым')
+                return redirect(reverse("post_detail", args=[post.id]))
+            except:
+                messages.warning(request, 'Что-то пошло не так')
                 return redirect(reverse("post_detail", args=[post.id]))
 
         elif request.method == 'POST' and 'delete' in request.POST:
@@ -57,6 +60,9 @@ class BlogDetailView(DetailView):
             id = request.POST['edit-comment_id']
             message = request.POST['message']
             comment = get_object_or_404(Comment, id=id)
+            if (message.strip() == ''):
+                messages.warning(request, 'Комментарий не может быть пустым')
+                return redirect(reverse('post_detail', args=[post.id]))
             try:
                 comment.message = message
                 comment.update_date = timezone.now()
