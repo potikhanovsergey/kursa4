@@ -1,6 +1,4 @@
 from django.db import models
-from django.utils import timezone, dateformat
-from django.conf import settings
 # Create your models here.
 from django.contrib.auth.models import User
 
@@ -20,7 +18,8 @@ class Comment(models.Model):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=300)
-    date = dateformat.format(timezone.now(), settings.DATE_FORMAT)
+    date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(null=True)
 
 
     def __str__(self):

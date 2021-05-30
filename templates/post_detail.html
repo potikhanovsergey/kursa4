@@ -2,6 +2,19 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    {% if messages %}
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="messages mt-3">
+                        {% for message in messages %}
+                            <h2>{{ message }}</h2>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     <section class="post-details">
         <div class="container">
             <div class="row justify-content-center">
@@ -30,8 +43,32 @@
                     {% if post.comments.all %}
                         {% for comment in post.comments.all %}
                             <div class="post-details__comment">
-                                <strong>{{ comment.user.username }} - {{ comment.date }}</strong>
+
+                                <strong>{{ comment.user.username }} - {{ comment.date }}
+                                    {% if comment.update_date %} (Отредактировано {{ comment.update_date }}) {% endif %}
+                                </strong>
                                 <p>{{ comment.message }}</p>
+
+                                {% if request.user == comment.user %}
+                                    <div style="display:none" id="update-form" class="update-form mb-3">
+                                        <form action="{% url 'post_detail' post.pk %}" method="POST">
+                                            {% csrf_token %}
+                                            {{ updateForm }}
+                                            <input type="hidden" name="edit-comment_id" value="{{ comment.id }}">
+                                            <button name="update" class="btn btn-success" type="submit">Сохранить</button>
+                                        </form>
+                                    </div>
+                                    <button id="update-comment" class="btn btn-warning">Редактировать</button>
+                                {% endif %}
+
+                                {% if request.user.username == 'admin' or request.user == comment.user %}
+                                    <form method="POST" action="{% url 'post_detail' post.pk %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                        <button name="delete" type="submit" class="mt-3 btn btn-danger">Удалить</button>
+                                    </form>
+                                {% endif %}
+
                             </div>
                         {% endfor %}
                     {% endif %}
@@ -40,7 +77,7 @@
                         <div class="form-group">
                             {{ form|crispy }}
                         </div>
-                        <button class="btn btn-primary btn-block" type="submit">
+                        <button name="send" class="btn btn-primary btn-block" type="submit">
                             Отправить
                         </button>
                     </form>
@@ -63,4 +100,14 @@
         </ul>
 
     </div>
+
+
+    <script>
+        const updateButton = document.getElementById("update-comment");
+        const updateForm = document.getElementById("update-form");
+        updateButton.addEventListener('click', function() {
+            updateForm.style.display = 'block';
+            updateButton.style.display = 'none';
+        })
+    </script>
 {% endblock content %}

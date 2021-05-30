@@ -10,6 +10,16 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'password1', 'password2']
 
 
+class UpdateForm(forms.ModelForm):
+    message = forms.CharField(label='', widget=forms.TextInput(attrs={
+        'placeholder': 'Изменить комментарий',
+        'class': 'form-control mb-2',
+    }))
+
+    class Meta:
+        model = Comment
+        fields = {'message'}
+
 class CommentForm(forms.ModelForm):
     message = forms.CharField(label='Комментарий', widget=forms.Textarea(attrs={
         'rows': '3',

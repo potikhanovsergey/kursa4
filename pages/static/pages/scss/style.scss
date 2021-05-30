@@ -210,6 +210,15 @@ section {
   &__message {
     font-size: 24px;
   }
+
+  &__comment {
+    background-color: $gray;
+    color: $black;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 7px 15px;
+    margin-bottom: 10px;
+  }
 }
 
 .other-posts {
