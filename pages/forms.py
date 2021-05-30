@@ -6,7 +6,7 @@ class CommentForm(forms.ModelForm):
                                   required=False,
                                   empty_value="Гость",
                                   widget=forms.TextInput(attrs={
-        'placeholder': 'Ваше имя'
+        'placeholder': 'Потиханов Сергей'
     }))
     message = forms.CharField(label='Комментарий', widget=forms.Textarea(attrs={
         'rows': '3',

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
     <section class="post-details">
@@ -22,7 +22,6 @@
             </div>
         </div>
 
-{#                    {% include 'createComment.html' %}#}
 
         <div class="container">
             <div class="row">
@@ -39,7 +38,7 @@
                     <form method="POST" action="{% url 'post_detail' post.pk %}">
                         {% csrf_token %}
                         <div class="form-group">
-                            {{ form }}
+                            {{ form|crispy }}
                         </div>
                         <button class="btn btn-primary btn-block" type="submit">
                             Отправить
