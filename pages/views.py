@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.models import User
 
 from django.contrib import messages
 
@@ -32,7 +32,10 @@ class BlogDetailView(DetailView):
         form = CommentForm(request.POST)
         if form.is_valid():
             form.instance.post_id = post
-            form.instance.post = post
+            if (request.user.is_authenticated):
+                form.instance.user = request.user
+            else:
+                form.instance.user = User.objects.all().get(username="Гость")
             form.save()
 
             return redirect(reverse("post_detail", args=[post.id]))
@@ -49,10 +52,6 @@ class BlogDetailView(DetailView):
 
 
 
-class BlogCommentCreateView(CreateView):
-    model = Comment
-    fields = ['author_name', 'message']
-    template_name = 'createComment.html'
 
 def registerPage(request):
     if request.user.is_authenticated:

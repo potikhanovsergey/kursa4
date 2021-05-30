@@ -30,7 +30,7 @@
                     {% if post.comments.all %}
                         {% for comment in post.comments.all %}
                             <div class="post-details__comment">
-                                <strong>{{ comment.author_name }} - {{ comment.date }}</strong>
+                                <strong>{{ comment.user.username }} - {{ comment.date }}</strong>
                                 <p>{{ comment.message }}</p>
                             </div>
                         {% endfor %}
