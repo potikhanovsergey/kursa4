@@ -1,4 +1,57 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+.user_card {
+  width: 350px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: #ffb7c5;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+
+.form_container {
+  margin-top: 20px;
+}
+
+#form-title {
+  color: #fff;
+}
+
+.login_btn {
+  width: 100%;
+  background: #33ccff !important;
+  color: white !important;
+}
+
+.login_btn:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.login_container {
+  padding: 0 2rem;
+}
+
+.input-group-text {
+  height: 100%;
+  background: #f7ba5b !important;
+  color: white !important;
+  border: 0 !important;
+  border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.input_user,
+.input_pass:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
 *, *::after, *::before {
   margin: 0;
   padding: 0;
@@ -6,7 +59,7 @@
 }
 
 ::selection {
-  background-color: #ff70db;
+  background-color: #ffb7c5;
   color: #fcfcfc;
 }
 
@@ -21,7 +74,7 @@ html {
 }
 
 body {
-  background-color: #F5F5DC;
+  background-color: #fbfbf0;
 }
 
 ul {
@@ -63,7 +116,7 @@ a {
   text-transform: uppercase;
 }
 .main-menu__link:hover {
-  color: #ff70db;
+  color: #ffb7c5;
 }
 
 @media (max-width: 768px) {
@@ -117,7 +170,7 @@ section {
 }
 
 .colored {
-  color: #ff70db;
+  color: #ffb7c5;
 }
 
 .statistics {
@@ -130,7 +183,7 @@ section {
 }
 .statistics__number {
   font-size: 2.2rem;
-  color: #ff70db;
+  color: #ffb7c5;
 }
 .statistics__img {
   width: 100px;

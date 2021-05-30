@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.contrib.auth import authenticate, login, logout
+
+
+from django.contrib import messages
 
 # Create your views here.
 from .models import Post, Comment
-from .forms import CommentForm
-
+from .forms import CommentForm, CreateUserForm
 
 class HomeTemplateView(TemplateView):
     template_name = 'index.html'
@@ -12,10 +15,12 @@ class HomeTemplateView(TemplateView):
 class AboutTemplateView(TemplateView):
     template_name = 'about.html'
 
+
 class BlogTemplateView(ListView):
     model = Post
     template_name = 'blog.html'
     context_object_name = 'posts'
+
 
 class BlogDetailView(DetailView):
     model = Post
@@ -42,11 +47,53 @@ class BlogDetailView(DetailView):
         })
         return context
 
+
+
 class BlogCommentCreateView(CreateView):
     model = Comment
     fields = ['author_name', 'message']
     template_name = 'createComment.html'
 
+def registerPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+
+                messages.success(request, '{0}, вы успешно зарегистрировались!'.format(user))
+
+                return redirect('login')
+
+        context = {'form': form}
+        return render(request, 'register.html', context)
+
+def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if (user is not None):
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.info(request, 'Никнейм или пароль введены неверно')
+
+        context = {}
+        return render(request, 'login.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
 
 class ContactsTemplateView(TemplateView):
     template_name = 'contacts.html'

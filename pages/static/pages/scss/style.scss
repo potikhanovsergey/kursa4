@@ -1,5 +1,8 @@
-@import 'variables';
+@use 'variables' as *;
+@use 'forms';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
 
 // BASE
 *, *::after, *::before {
@@ -24,7 +27,7 @@ html {
 }
 
 body {
-  background-color: #F5F5DC;
+  background-color: lighten(#F5F5DC, 5%);
 }
 
 ul {
@@ -231,6 +234,10 @@ section {
 }
 
 // POST_DETAIL END //
+
+
+
+
 
 
 
