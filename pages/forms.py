@@ -13,7 +13,7 @@ class CreateUserForm(UserCreationForm):
 class UpdateForm(forms.ModelForm):
     message = forms.CharField(label='', widget=forms.TextInput(attrs={
         'placeholder': 'Изменить комментарий',
-        'class': 'form-control mb-2',
+        'class': 'form-control mb-2 update-input',
     }))
 
     class Meta:

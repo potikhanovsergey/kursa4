@@ -47,7 +47,7 @@
                                 <strong>{{ comment.user.username }} - {{ comment.date }}
                                     {% if comment.update_date %} (Отредактировано {{ comment.update_date }}) {% endif %}
                                 </strong>
-                                <p>{{ comment.message }}</p>
+                                <p class="comment">{{ comment.message }}</p>
 
                                 {% if request.user == comment.user %}
                                     <div style="display:none" id="update-form" class="update-form mb-3">
@@ -58,7 +58,7 @@
                                             <button name="update" class="btn btn-success" type="submit">Сохранить</button>
                                         </form>
                                     </div>
-                                    <button id="update-comment" class="btn btn-warning">Редактировать</button>
+                                    <button class="update-comment btn btn-warning">Редактировать</button>
                                 {% endif %}
 
                                 {% if request.user.username == 'admin' or request.user == comment.user %}
@@ -103,11 +103,20 @@
 
 
     <script>
-        const updateButton = document.getElementById("update-comment");
-        const updateForm = document.getElementById("update-form");
-        updateButton.addEventListener('click', function() {
-            updateForm.style.display = 'block';
-            updateButton.style.display = 'none';
-        })
+        const updateButtons = document.querySelectorAll(".update-comment");
+        const updateInput = document.querySelectorAll(".update-input");
+
+        for (let i = 0; i < updateButtons.length; i++) {            // По нажатию на кнопку редактировать появится поле для редактирования
+                                                                    // и кнопка "Сохранить"
+            updateButtons[i].addEventListener('click', function() {
+                const comment = this.parentElement.querySelector('.comment').innerHTML;
+                const input = this.parentElement.querySelector('.update-input');
+                input.value = comment;
+                this.parentElement.querySelector('.update-form').style.display = 'block';
+                this.parentElement.querySelector('.update-comment').style.display = 'none';
+            })
+        }
+
+
     </script>
 {% endblock content %}
