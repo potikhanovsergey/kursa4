@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 # Create your views here.
 from django.conf import settings
-from .models import Post, Comment
+from .models import Post, Comment, Service
 from django.utils import dateformat, timezone
 from .forms import CommentForm, CreateUserForm, UpdateForm
 
@@ -131,6 +131,11 @@ def logoutUser(request):
 
 class ContactsTemplateView(TemplateView):
     template_name = 'contacts.html'
+
+class ServicesTemplateView(ListView):
+    model = Service
+    context_object_name = 'services'
+    template_name = 'services.html'
 
 
 

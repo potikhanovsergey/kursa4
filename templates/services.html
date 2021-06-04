@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="services">
+        <h1>Наши услуги</h1>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-9 mb-3">
+                    <img src="{% static 'pages/img/services.jpg' %}" alt="">
+                </div>
+                <div class="col-9">
+                    <p class="text-center text text_opacity text_big">Ознакомтесь с нашими предложениями и выберите приглянувшиеся.</p>
+                    <p class="text-center text text_opacity text_big">Сделайте себя красивее!</p>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div class="row justify-content-center services">
+
+
+                {% for service in services %}
+                <div class="service col-6">
+                    <h3>{{ service.title }}</h3>
+
+                        <div class="service__img-wrapper">
+                            <img class="service__img" src="{% static 'pages/img/'|add:service.img_title %}" alt="">
+                            <div class="service__details">
+                                <p class="service__text">
+                                    {{ service.description }}
+                                </p>
+                                <button class="service__button btn btn-primary">
+                                    Записаться
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+{% endblock content %}

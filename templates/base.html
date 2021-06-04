@@ -15,13 +15,13 @@
     <header class="header">
         <div class="container">
             <div class="row align-items-center justify-content-center">
-                <div class="col-12 col-sm-3 text-md-left text-center">
+                <div class="col-12 col-lg-2 text-md-left text-center">
                     <a href="{% url 'home' %}" class="brand">
                         Beauty
                     </a>
                 </div>
 
-                <div class="col-12 col-sm-9 col-lg-6">
+                <div class="col-12 col-lg-8 d-none d-lg-block">
                     <nav class="nav">
                         <ul class="main-menu">
                             <li class="main-menu__item">
@@ -29,6 +29,9 @@
                             </li>
                             <li class="main-menu__item">
                                 <a href="{% url 'about' %}" class="main-menu__link">О нас</a>
+                            </li>
+                            <li class="main-menu__item">
+                                <a href="{% url 'services' %}" class="main-menu__link">Услуги</a>
                             </li>
                             <li class="main-menu__item">
                                 <a href="{% url 'blog' %}" class="main-menu__link">Блог</a>
@@ -40,7 +43,7 @@
                     </nav>
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-lg-2 d-none d-lg-block">
                     {% if request.user.is_anonymous  %}
                         <span>Гость</span>
                         <span><a href="{% url 'logout' %}">Войти</a></span>
@@ -51,6 +54,45 @@
                     {% endif %}
                 </div>
 
+                {% include 'Hamburger.html' %}
+
+            </div>
+        </div>
+
+        <div class="mobile-menu-wrapper">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <ul class="mobile-menu mt-5">
+                            <li class="mobile-menu__item">
+                                <a href="{% url 'home' %}" class="mobile-menu__link">Главная</a>
+                            </li>
+                            <li class="mobile-menu__item">
+                                <a href="{% url 'about' %}" class="mobile-menu__link">О нас</a>
+                            </li>
+                            <li class="mobile-menu__item">
+                                <a href="{% url 'services' %}" class="mobile-menu__link">Услуги</a>
+                            </li>
+                            <li class="mobile-menu__item">
+                                <a href="{% url 'blog' %}" class="mobile-menu__link">Блог</a>
+                            </li>
+                            <li class="mobile-menu__item">
+                                <a href="{% url 'contacts' %}" class="mobile-menu__link">Контакты</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <div class="mobile-status text-center">
+                        {% if request.user.is_anonymous  %}
+                            <span class="mobile-status">Гость</span>
+                            <span><a href="{% url 'logout' %}">Войти</a></span>
+                        {% else %}
+                            <span class="mobile-status">{{ request.user }}</span>
+                            <span><a href="{% url 'logout' %}">Выйти</a></span>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -59,5 +101,36 @@
 
         {% endblock content %}
     </main>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <span class="tag">
+                        Салон красоты "Бьюти"
+                    </span>
+                </div>
+                <div class="col-4">
+                    <span class="email">
+                        contact@beautysalon.ru
+                    </span>
+                </div>
+                <div class="col-4">
+                    <span class="phone">
+                        +7(937)-439-11-96
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu-wrapper')
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('mobile-menu-wrapper_active');
+            hamburger.classList.toggle('active')
+        })
+    </script>
 </body>
 </html>

@@ -1,10 +1,8 @@
 @use 'variables' as *;
 @use 'forms';
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@use 'Hamburger';
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');// BASE
 
-
-
-// BASE
 *, *::after, *::before {
   margin: 0;
   padding: 0;
@@ -12,22 +10,39 @@
 }
 
 ::selection {
-  background-color: $pink;
-  color: $gray;
+  background-color: var(--pink);
+  color: var(--gray);
 }
 
 img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: fill;
 }
 
 html {
-  font-family: 'Roboto', sans-serif;
+}
+
+html * {
+  font-family: 'Comfortaa', sans-serif;
 }
 
 body {
-  background-color: lighten(#F5F5DC, 5%);
+  background-color: #efefef;
+  color: var(--black);
+  position: relative;
+}
+
+
+
+.text {
+  &_opacity {
+    opacity: 0.8;
+  }
+  &_big {
+    font-size: 1.4rem;
+  }
 }
 
 ul {
@@ -44,17 +59,42 @@ h1, h2, h3 {
 
 a {
   text-decoration: none;
-  color: $black;
-  transition: $transition;
+  color: var(--black);
+  transition: var(--transition);
 }
 
+.btn-dark {
+  border: none;
+  &:hover {
+    background-color: var(--pink);
+  }
+}
+
+// HEADER
+
+.hamburger-menu {
+  position: absolute;
+  right: 25px;
+  display: none;
+  width: 60px;
+  path {
+    stroke: var(--black);
+  }
+}
+
+@media (max-width: 991px) {
+  .hamburger-menu {
+    display: block;
+  }
+}
 
 .header {
-  background-color: $gray;
+  background-color: var(--gray);
   display: flex;
   box-shadow: 0 0 2px 0 rgb(0 0 0 / 7%);
   position: fixed;
   top: 0;
+  z-index: 100;
   height: 60px;
   left: 0;
   right: 0;
@@ -68,29 +108,13 @@ a {
   &__link {
     padding: 1.5rem 20px;
     text-transform: uppercase;
+    font-weight: 700;
     &:hover {
-      color: $pink;
+      color: var(--pink);
     }
   }
 }
 
-@media (max-width: 768px) {
-  .main-menu {
-    &__link {
-      padding: 1.5rem 7px;
-    }
-  }
-}
-
-@media (max-width: 575px) {
-  .main-menu {
-    margin: 0 auto;
-    padding: 0;
-    &__link {
-      padding: 1.5rem 5px;
-    }
-  }
-}
 
 //  BASE END
 
@@ -106,21 +130,27 @@ a {
 }
 
 section {
-  padding: $padding;
+  padding: var(--padding);
 }
 
 .main {
   margin-top: 60px;
+  padding-bottom: 50px;
+  min-height: calc(100vh - 50px);
 }
 
 .brand {
   font-size: 22px;
   font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background-color: var(--pink);
+  color: var(--gray);
   text-transform: uppercase;
-  color: #000;
   margin: 0 auto;
+  transition: var(--transition);
   &:hover {
-    color: $black;
+    color: var(--black);
   }
 }
 
@@ -133,7 +163,7 @@ section {
 
 
 .colored {
-  color: $pink;
+  color: var(--pink);
 }
 
 .statistics {
@@ -145,7 +175,7 @@ section {
   }
   &__number {
     font-size: 2.2rem;
-    color: $pink;
+    color: var(--pink);
   }
   &__img {
     width: 100px;
@@ -164,17 +194,17 @@ section {
 
 .blog-to-post-link {
   &:hover {
-    color: $black;
+    color: var(--black);
     >.post {
-      background-color: darken($gray, 3%);
+      background-color: hsl(var(--gray, 3%));
     }
   }
 }
 
 .post {
   text-align: left;
-  transition: $transition;
-  background-color: $gray;
+  transition: var(--transition);
+  background-color: var(--gray);
   padding: 30px;
 
   &__info {
@@ -212,8 +242,8 @@ section {
   }
 
   &__comment {
-    background-color: $gray;
-    color: $black;
+    background-color: var(--gray);
+    color: var(--black);
     font-size: 18px;
     border-radius: 5px;
     padding: 7px 15px;
@@ -226,7 +256,7 @@ section {
   width: 300px;
   position: fixed;
   top: 22%;
-  background-color: $gray;
+  background-color: var(--gray);
   padding: 10px 20px;
   border-radius: 10px;
   &__heading {
@@ -243,6 +273,59 @@ section {
 }
 
 // POST_DETAIL END //
+
+// FOOTER //
+
+.footer {
+  background: var(--black);
+  color: #fff;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+// FOOTER END //
+
+// SERVICES //
+.services {
+  row-gap: 50px;
+}
+
+.service {
+  text-align: center;
+  &__img {
+    height: 370px;
+  }
+  &__img-wrapper {
+    margin: 0 auto;
+    position: relative;
+    width: 75%;
+    &:hover {
+    >.service__details {
+        background-color: rgba(var(--pinkRGB), .8);
+        opacity: 1;
+      }
+    }
+  }
+  &__details {
+    position: absolute;
+    padding: 50px 20px 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: 1.2rem;
+    color: #fff;
+    bottom: 0;
+    transition: 0.4s ease all;
+    opacity: 0;
+  }
+}
+
+// SERVICES END //
 
 
 

@@ -1,9 +1,10 @@
 @use 'variables' as *;
 .user_card {
-    width: 350px;
+    max-width: 400px;
+    width: 97%;
     margin-top: auto;
     margin-bottom: auto;
-    background: $pink;
+    background: var(--pink);
     position: relative;
     display: flex;
     justify-content: center;
@@ -34,6 +35,11 @@
 .login_container {
     padding: 0 2rem;
 }
+
+.input-group {
+    width: 100%;
+}
+
 .input-group-text {
     height: 100%;
     background: #f7ba5b !important;
@@ -45,4 +51,8 @@
 .input_pass:focus {
     box-shadow: none !important;
     outline: 0px !important;
+}
+
+.login-register-redirect {
+    color: #fff;
 }

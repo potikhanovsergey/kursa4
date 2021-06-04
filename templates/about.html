@@ -2,20 +2,23 @@
     {% load static %}
     {% block content %}
         <section class="about-section">
+            <h1>О нас</h1>
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-6 section-heading">
-                        <h1 class="section-heading__h1">О нас в цифрах</h1>
+                    <div class="col-9 mb-3">
+                        <img src="{% static 'pages/img/salon-1.jpg' %}" alt="">
+                    </div>
+                    <div class="col-9">
+                        <p class="text-center text text_opacity text_big">«Beauty» – это уютный и комфортный салон красоты, в котором вы сможете воспользоваться практически всеми существующими бьюти-услугами</p>
+                        <p class="text-center text text_opacity text_big">Наш салон может предложить Вам современные и востребованные процедуры, такие как окрашивание волос любой сложности, наращивание ресниц, аппаратный и классический маникюр/педикюр, перманентный макияж (нано-напыление) и многое другое. С полным перечнем услуг и цен, вы можете ознакомиться в разделе "Услуги".</p>
                     </div>
                 </div>
             </div>
-            <div class="statistics container">
-                <div class="row justify-content-center">
-                    <div class="col-6 mb-4">
-                        <h2>Нами было сделано</h2>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
+
+            <div class="statistics container mt-5">
+                <h2>О нас в цифрах</h2>
+                <div class="row justify-content-center mt-5">
+
                     <div class="col-2">
                         <div class="statistics__img">
                             <img src="{% static "pages/img/makeup.png" %}" alt="">
