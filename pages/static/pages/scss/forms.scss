@@ -4,7 +4,7 @@
     width: 97%;
     margin-top: auto;
     margin-bottom: auto;
-    background: var(--pink);
+    background: var(--black);
     position: relative;
     display: flex;
     justify-content: center;
@@ -25,12 +25,12 @@
 }
 .login_btn {
     width: 100%;
-    background: #33ccff !important;
-    color: white !important;
+    background: #33ccff;
+    color: white;
 }
 .login_btn:focus {
-    box-shadow: none !important;
-    outline: 0px !important;
+    box-shadow: none;
+    outline: 0px;
 }
 .login_container {
     padding: 0 2rem;
@@ -42,15 +42,15 @@
 
 .input-group-text {
     height: 100%;
-    background: #f7ba5b !important;
-    color: white !important;
-    border: 0 !important;
-    border-radius: 0.25rem 0 0 0.25rem !important;
+    background: var(--pink);
+    border: 0;
+    color: var(--gray);
+    border-radius: 0.25rem 0 0 0.25rem;
 }
 .input_user,
 .input_pass:focus {
-    box-shadow: none !important;
-    outline: 0px !important;
+    box-shadow: none;
+    outline: 0px;
 }
 
 .login-register-redirect {

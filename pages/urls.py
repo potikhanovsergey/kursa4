@@ -1,5 +1,6 @@
 from django.urls import path
 
+
 from .views import (HomeTemplateView, AboutTemplateView, BlogTemplateView, ContactsTemplateView, BlogDetailView,
 registerPage, loginPage, logoutUser, ServicesTemplateView)
 urlpatterns = [

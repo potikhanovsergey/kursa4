@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     author = models.CharField(max_length=30)
     title = models.CharField(max_length=30)
-    description = models.CharField(max_length=50)
+    description = models.CharField(max_length=100)
+    img = models.ImageField(upload_to='pages/static/pages/img', max_length=100, default="post-img.png")
     message = models.TextField()
     date = models.DateField()
 

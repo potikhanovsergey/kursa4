@@ -5,8 +5,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-6 section-heading">
-                        <h1 class="section-heading__h1">Recent from blog</h1>
-                        <p class="section-heading__p">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                        <h1 class="section-heading__h1">Недавнее из нашего блога</h1>
                     </div>
                 </div>
             </div>
@@ -14,18 +13,20 @@
             <div class="container">
                 <div class="row">
                     {% for post in posts %}
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-6 col-12 mb-4">
                             <a class="blog-to-post-link" href="{% url 'post_detail' post.id %}">
                                 <div class="post">
-                                    <div class="post__img-wrapper">
-                                        <img src="{% static 'pages/img/post-img.png' %}" alt="" class="post__img">
+                                    <div style='background-image: url("{{ post.img.url }}")' class="post__img-wrapper">
+{#                                        <img src="{{ post.img.url }}" alt="" class="post__img">#}
                                     </div>
-                                    <div class="post__info">
-                                        <span class="post__date">{{ post.date }}</span>
-                                        <div class="post__author">{{ post.author }}</div>
+                                    <div class="post__inner">
+                                        <div class="post__info">
+                                            <span class="post__date">{{ post.date }}</span>
+                                            <div class="post__author">{{ post.author }}</div>
+                                        </div>
+                                        <h3 class="post__title">{{ post.title }}</h3>
+                                        <p class="post__description">{{ post.description }}</p>
                                     </div>
-                                    <h3 class="post__title">{{ post.title }}</h3>
-                                    <p class="post__description">{{ post.description }}</p>
                                 </div>
                             </a>
                         </div>

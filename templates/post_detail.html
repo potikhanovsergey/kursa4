@@ -17,13 +17,13 @@
     {% endif %}
     <section class="post-details">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-12">
                     <h1 class="post-details__title">{{ post.title }}</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-9 col-12 col-lg-6">
+                <div class="col-md-9 col-12 col-lg-7">
                     <div class="post-details__info">
                         <span class="post-details__author">{{ post.author }}</span>
                         <span class="post-details__date">{{ post.date }}</span>
@@ -86,20 +86,26 @@
         </div>
     </section>
 
+    {% if posts|length > 1 %}
     <div class="other-posts">
-        <h4 class="other-posts__heading">Другие посты</h4>
+        <h4 class="other-posts__heading">Последние посты</h4>
         <ul class="other-posts__list">
-            {% for p in posts %}
-                <li class="other-posts__item">
-                    <a class="other-posts__link" href="{% url 'post_detail' p.id %}">{{ p.title }}</a>
-                </li>
+            {% for p in posts|slice:"::-1"|slice:":6" %}
+                {% if p.title != post.title %}
+                    <li class="other-posts__item">
+                        <a class="other-posts__link" href="{% url 'post_detail' p.id %}">{{ p.title }}</a>
+                    </li>
+                {% endif %}
+
             {% endfor %}
             <li class="other-posts__item">
-                <a href="{% url 'blog' %}" class="other-posts__link">Смотреть все</a>
+                <a href="{% url 'blog' %}" class="other-posts__link">Смотреть все ({{ posts|length }})</a>
             </li>
         </ul>
 
     </div>
+
+    {% endif %}
 
 
     <script>
