@@ -36,10 +36,10 @@
         </div>
 
 
-        <div class="container">
+        <div class="container post-details__comments">
             <div class="row">
                 <div class="col-lg-8">
-                    <h2>Комментарии ({{ post_comments_count }})</h2>
+                   <h2>Комментарии ({{ post_comments_count }})</h2>
                     {% if post.comments.all %}
                         {% for comment in post.comments.all %}
                             <div class="post-details__comment">

@@ -29,7 +29,7 @@ html * {
 }
 
 body {
-  background-color: #efefef;
+  background-color: #faf7f7;
   color: var(--black);
   position: relative;
 }
@@ -161,6 +161,10 @@ section {
   }
 }
 
+.home__text {
+  text-align: center;
+}
+
 
 .colored {
   color: var(--pink);
@@ -195,7 +199,7 @@ section {
   &:hover {
     color: var(--gray);
     >.post {
-      background-color: rgba(var(--pinkRGB), .6);
+      background-color: rgba(var(--pinkRGB), .5);
     }
   }
 }
@@ -204,7 +208,6 @@ section {
   text-align: left;
   transition: var(--transition);
   background-color: var(--gray);
-  padding: 5px 5px 0 5px;
   min-height: 480px;
   &__inner {
     padding: 15px 15px 0 15px;
@@ -264,7 +267,7 @@ section {
 }
 
 .other-posts {
-  right: 10%;
+  right: 3%;
   width: 300px;
   position: fixed;
   top: 22%;
@@ -280,7 +283,35 @@ section {
 @media (max-width: 991px) {
   .other-posts {
     position: static;
-    margin: 0 auto;
+    margin: 50px auto;
+  }
+  
+  .home__text {
+    text-align: left;
+  }
+}
+
+
+@media print {
+  .other-posts {
+    display: none;
+  }
+
+  * {
+    color: black !important;
+  }
+
+  .post-details, header {
+    button, textarea, form {
+      display: none !important;
+    }
+  }
+  .post-details__comments {
+    page-break-before: always;
+  }
+  
+  .header, footer {
+    position: relative;
   }
 }
 

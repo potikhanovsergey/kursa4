@@ -129,10 +129,14 @@
   background-color: var(--pink);
   transform: translateX(-150%);
   transition: 0.6s ease all;
+  visibility: hidden;
+  opacity: 0;
   z-index: 10;
 }
 .mobile-menu-wrapper_active {
   transform: translateX(0);
+  visibility: visible;
+  opacity: 1;
 }
 
 .mobile-menu__link {
@@ -168,7 +172,7 @@ html * {
 }
 
 body {
-  background-color: #efefef;
+  background-color: #faf7f7;
   color: var(--black);
   position: relative;
 }
@@ -288,6 +292,10 @@ section {
   font-size: 3.6rem;
 }
 
+.home__text {
+  text-align: center;
+}
+
 .colored {
   color: var(--pink);
 }
@@ -323,14 +331,13 @@ section {
   color: var(--gray);
 }
 .blog-to-post-link:hover > .post {
-  background-color: rgba(var(--pinkRGB), 0.6);
+  background-color: rgba(255, 80, 139, 0.5);
 }
 
 .post {
   text-align: left;
   transition: var(--transition);
   background-color: var(--gray);
-  padding: 5px 5px 0 5px;
   min-height: 480px;
 }
 .post__inner {
@@ -374,7 +381,7 @@ section {
 }
 
 .other-posts {
-  right: 10%;
+  right: 3%;
   width: 300px;
   position: fixed;
   top: 22%;
@@ -389,7 +396,32 @@ section {
 @media (max-width: 991px) {
   .other-posts {
     position: static;
-    margin: 0 auto;
+    margin: 50px auto;
+  }
+
+  .home__text {
+    text-align: left;
+  }
+}
+@media print {
+  .other-posts {
+    display: none;
+  }
+
+  * {
+    color: black !important;
+  }
+
+  .post-details button, .post-details textarea, .post-details form, header button, header textarea, header form {
+    display: none !important;
+  }
+
+  .post-details__comments {
+    page-break-before: always;
+  }
+
+  .header, footer {
+    position: relative;
   }
 }
 .footer {
@@ -420,7 +452,7 @@ section {
   width: 75%;
 }
 .service__img-wrapper:hover > .service__details {
-  background-color: rgba(var(--pinkRGB), 0.8);
+  background-color: rgba(255, 80, 139, 0.8);
   opacity: 1;
 }
 .service__details {

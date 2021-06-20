@@ -59,9 +59,13 @@
   background-color: var(--pink);
   transform: translateX(-150%);
   transition: .6s ease all;
+  visibility: hidden;
+  opacity: 0;
   z-index: 10;
   &_active {
     transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
   }
 }
 

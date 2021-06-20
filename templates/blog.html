@@ -4,7 +4,7 @@
         <section class="blog-section">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-6 section-heading">
+                    <div class="col-6 section-heading mb-4">
                         <h1 class="section-heading__h1">Недавнее из нашего блога</h1>
                     </div>
                 </div>
@@ -17,7 +17,6 @@
                             <a class="blog-to-post-link" href="{% url 'post_detail' post.id %}">
                                 <div class="post">
                                     <div style='background-image: url("{{ post.img.url }}")' class="post__img-wrapper">
-{#                                        <img src="{{ post.img.url }}" alt="" class="post__img">#}
                                     </div>
                                     <div class="post__inner">
                                         <div class="post__info">
