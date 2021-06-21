@@ -1,0 +1,82 @@
+@use 'variables' as *;
+.hamburger-menu {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+  z-index: 101;
+}
+.line {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 5;
+  transition: stroke-dasharray 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-dashoffset 700ms cubic-bezier(0.4, 0, 0.2, 1), stroke 1s ease;
+}
+.line1 {
+  stroke-dasharray: 60 207;
+  stroke-width: 5;
+}
+.line2 {
+  stroke-dasharray: 60 60;
+  stroke-width: 5;
+}
+.line3 {
+  stroke-dasharray: 60 207;
+  stroke-width: 5;
+}
+.opened {
+  .line1 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 5;
+    stroke: #fff;
+  }
+
+  .line2 {
+    stroke-dasharray: 1 60;
+    stroke-dashoffset: -30;
+    stroke-width: 5;
+    stroke: #fff;
+  }
+
+  .line3 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 5;
+    stroke: #fff;
+}
+
+}
+
+.mobile-menu-wrapper {
+  left: 0;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: var(--pink);
+  transform: translateX(-150%);
+  transition: .6s ease all;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 10;
+  &_active {
+    transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.mobile-menu {
+  &__link {
+    font-size: 2rem;
+    color: #fff;
+  }
+}
+
+.mobile-status {
+  font-size: 2rem;
+  color: #fff;
+}

@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'flk%b1p&8zxr_dvg-=7%)z@r*@6dacndu0_%68m@-gkut#-1ia'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'pages_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
@@ -111,8 +111,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 USE_I18N = True
 USE_L10N = False
-LANGUAGE_CODE = 'ru-RU'
 DATE_FORMAT = 'd E Y H:i'
+LANGUAGES = [
+    ('ru', 'RU')
+]
+# LANGUAGE_CODE = 'ru-RU'
 
 
 TIME_ZONE = 'Europe/Moscow'
@@ -127,6 +130,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = 'pages/static/'
-STATIC_ROOT = "pages/static/"
-# MEDIA_ROOT = "/static/img"
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+
+
+STATIC_ROOT = ''
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    path.join(BASE_DIR, "static"),
+)
+
+MEDIA_ROOT = path.join(BASE_DIR, '/media/')
+MEDIA_URL = '/media/'
