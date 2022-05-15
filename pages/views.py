@@ -4,10 +4,19 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 # Create your views here.
+from rest_framework import routers, serializers, viewsets, status, generics, pagination
 from django.conf import settings
 from .models import Post, Comment, Service
 from django.utils import dateformat, timezone
 from .forms import CommentForm, CreateUserForm, UpdateForm
+from .serializers import PostSerializer, CommentSerializer
+from rest_framework.decorators import action
+
+
+class StandardResultsSetPagination(pagination.PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 class HomeTemplateView(TemplateView):
     template_name = 'index.html'
@@ -136,6 +145,42 @@ class ServicesTemplateView(ListView):
     model = Service
     context_object_name = 'services'
     template_name = 'services.html'
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    pagination_class = StandardResultsSetPagination
+
+    @action(methods=['GET'], detail=False)
+    def get_authors(self, request, **kwargs):
+        authors = Post.objects.values_list('author', flat=True)
+        authors = set(authors)
+        return Response(authors)
+
+    @action(methods=['DELETE'], detail=False)
+    def delete_today_posts(self, request, **kwargs):
+      posts = Post.objects.filter(Q(date=date.today()))
+      return Response(posts.delete())
+      
+    @action(methods=['DELETE'], detail=False)
+    def delete_starts_with(self, request, **kwargs):
+      posts = Post.objects.filter(Q(title__startswith="31"))
+      return Response(posts.delete())
+
+# Наборы представлений описывают поведение представлений
+
+class CommentsList(generics.ListAPIView):
+    serializer_class = CommentSerializer
+    filter_fields = (
+        'message',
+    )
+    def get_queryset(self):
+        """
+        This view should return a list of all the comments
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Comment.objects.filter(user=user)
 
 
 

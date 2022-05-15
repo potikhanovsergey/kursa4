@@ -1,8 +1,7 @@
-from django.urls import path
-
-
+from django.urls import path, include, re_path
 from .views import (HomeTemplateView, AboutTemplateView, BlogTemplateView, ContactsTemplateView, BlogDetailView,
 registerPage, loginPage, logoutUser, ServicesTemplateView)
+
 urlpatterns = [
     path('', HomeTemplateView.as_view(), name="home"),
     path('register/', registerPage, name="register"),
@@ -14,3 +13,5 @@ urlpatterns = [
     path('contacts/', ContactsTemplateView.as_view(), name="contacts"),
     path('services/', ServicesTemplateView.as_view(), name="services"),
 ]
+
+

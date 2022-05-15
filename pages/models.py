@@ -60,8 +60,3 @@ class ClientService(models.Model):
     employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=False)
     is_done = models.BooleanField(default=False)
-
-
-
-
-

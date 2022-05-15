@@ -39,8 +39,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages.apps.PagesConfig',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'rest_framework',
+    'django_filters'
 ]
+
+REST_FRAMEWORK = {
+    # Используйте стандартные Django  `django.contrib.auth` разрешения,
+    # или разрешите доступ только для чтения для неаутентифицированных пользователей.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3
+}
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -115,7 +128,7 @@ DATE_FORMAT = 'd E Y H:i'
 LANGUAGES = [
     ('ru', 'RU')
 ]
-# LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'ru-RU'
 
 
 TIME_ZONE = 'Europe/Moscow'
