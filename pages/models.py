@@ -1,6 +1,7 @@
 from django.db import models
 # Create your models here.
 from django.contrib.auth.models import User
+from simple_history.models import HistoricalRecords
 
 
 class Post(models.Model):
@@ -10,6 +11,7 @@ class Post(models.Model):
     img = models.ImageField(upload_to='pages/static/pages/img', max_length=100, default="post-img.png")
     message = models.TextField()
     date = models.DateField()
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.author + ' - ' + self.title
@@ -21,6 +23,7 @@ class Comment(models.Model):
     message = models.CharField(max_length=300)
     date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(null=True)
+    history = HistoricalRecords()
 
 
     def __str__(self):
