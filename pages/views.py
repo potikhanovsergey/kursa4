@@ -9,8 +9,12 @@ from django.conf import settings
 from .models import Post, Comment, Service
 from django.utils import dateformat, timezone
 from .forms import CommentForm, CreateUserForm, UpdateForm
-from .serializers import PostSerializer, CommentSerializer
+from .serializers import PostSerializer, CommentSerializer, UserSerializer, UsernameSerializer
 from rest_framework.decorators import action
+from django.db.models import Q
+from datetime import datetime, timedelta, date
+from rest_framework.response import Response
+
 
 
 class StandardResultsSetPagination(pagination.PageNumberPagination):
@@ -184,3 +188,29 @@ class CommentsList(generics.ListAPIView):
 
 
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    action_serializers = {
+        'change_username': UsernameSerializer,
+    }
+
+    @action(detail=True, methods=['post'])
+    def change_username(self, request, pk=None):
+        user = self.get_object()
+        serializer = UsernameSerializer(data=request.data)
+        if (serializer.is_valid()):
+          username = serializer.validated_data['username']
+          user.username = username
+          user.save()
+          return Response({'status': 'Username changed'})
+        else:
+          return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    def get_serializer_class(self):
+        if hasattr(self, 'action_serializers'):
+            return self.action_serializers.get(self.action, self.serializer_class)
+
+        return super(MyModelViewSet, self).get_serializer_class()

@@ -12,6 +12,19 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 from os import path
+from django.conf.urls.static import static
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn='https://da9d9d2699f04d69a0162e1524533c83@o1248533.ingest.sentry.io/6408550',
+    integrations=[
+        DjangoIntegration(
+          transaction_style='url',
+        ),
+    ],
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -159,5 +172,5 @@ STATICFILES_DIRS = (
     path.join(BASE_DIR, "static"),
 )
 
-# MEDIA_ROOT = path.join(BASE_DIR, '/media/')
-# MEDIA_URL = '/media/'
+MEDIA_ROOT = path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'

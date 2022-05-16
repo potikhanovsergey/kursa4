@@ -27,53 +27,36 @@ import json
 from datetime import datetime, timedelta, date
 from pages.serializers import UserSerializer, UsernameSerializer
 from django.db.models import Q
-from pages.views import PostViewSet, CommentsList
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    action_serializers = {
-        'change_username': UsernameSerializer,
-    }
-
-    @action(detail=True, methods=['post'])
-    def change_username(self, request, pk=None):
-        user = self.get_object()
-        serializer = UsernameSerializer(data=request.data)
-        if (serializer.is_valid()):
-          username = serializer.validated_data['username']
-          user.username = username
-          user.save()
-          return Response({'status': 'Username changed'})
-        else:
-          return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
-
-    def get_serializer_class(self):
-        if hasattr(self, 'action_serializers'):
-            return self.action_serializers.get(self.action, self.serializer_class)
-
-        return super(MyModelViewSet, self).get_serializer_class()
+from pages.views import PostViewSet, CommentsList, UserViewSet
+from sentry_sdk import capture_exception
 
 
 
 # Роутеры позволяют быстро и просто сконфигурировать адреса.
 router = routers.DefaultRouter()
-router.register(r'api-auth/posts', PostViewSet)
-router.register(r'api-auth/users', UserViewSet)
+router.register(r'api/posts', PostViewSet)
+router.register(r'api/users', UserViewSet)
 
 
 # Привяжите конфигурацию URL, используя роутеры.
 # Так же мы предоставляем URL для авторизации в браузере.
 
+
+def trigger_error(request):
+  try:
+    division_by_zero = 1 / 0
+  except Exception as e:
+    capture_exception(e)
+    division_by_zero = 1 / 0
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
     re_path(r'^', include(router.urls)),
-    re_path(r'^api-auth/comments', CommentsList.as_view())
+    re_path(r'^api/comments', CommentsList.as_view()),
+    path('sentry-debug/', trigger_error),
 ]
 
-
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
