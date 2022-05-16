@@ -12,6 +12,19 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 from os import path
+from django.conf.urls.static import static
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn='https://da9d9d2699f04d69a0162e1524533c83@o1248533.ingest.sentry.io/6408550',
+    integrations=[
+        DjangoIntegration(
+          transaction_style='url',
+        ),
+    ],
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,8 +52,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages.apps.PagesConfig',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'rest_framework',
+    'django_filters',
+    'simple_history',
 ]
+
+REST_FRAMEWORK = {
+    # Используйте стандартные Django  `django.contrib.auth` разрешения,
+    # или разрешите доступ только для чтения для неаутентифицированных пользователей.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3
+}
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -53,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'pages_project.urls'
@@ -115,7 +143,7 @@ DATE_FORMAT = 'd E Y H:i'
 LANGUAGES = [
     ('ru', 'RU')
 ]
-# LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'ru-RU'
 
 
 TIME_ZONE = 'Europe/Moscow'
@@ -144,5 +172,5 @@ STATICFILES_DIRS = (
     path.join(BASE_DIR, "static"),
 )
 
-# MEDIA_ROOT = path.join(BASE_DIR, '/media/')
-# MEDIA_URL = '/media/'
+MEDIA_ROOT = path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'

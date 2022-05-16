@@ -128,7 +128,6 @@
   top: 0;
   background-color: var(--pink);
   transform: translateX(-150%);
-  transition: 0.6s ease all;
   visibility: hidden;
   opacity: 0;
   z-index: 10;
@@ -199,7 +198,7 @@ h1, h2, h3 {
 a {
   text-decoration: none;
   color: var(--black);
-  transition: var(--transition);
+  transition: 0.4s ease color;
 }
 
 .btn-dark {
@@ -279,10 +278,14 @@ section {
   color: var(--gray);
   text-transform: uppercase;
   margin: 0 auto;
-  transition: var(--transition);
+  transition: 0.4s ease color;
 }
 .brand:hover {
   color: var(--black);
+}
+
+.errorlist {
+  color: white;
 }
 
 .home-heading {
@@ -331,7 +334,7 @@ section {
   color: var(--gray);
 }
 .blog-to-post-link:hover > .post {
-  background-color: rgba(255, 80, 139, 0.5);
+  background-color: rgba(var(--pinkRGB), 0.5);
 }
 
 .post {
@@ -452,7 +455,7 @@ section {
   width: 75%;
 }
 .service__img-wrapper:hover > .service__details {
-  background-color: rgba(255, 80, 139, 0.8);
+  background-color: rgba(var(--pinkRGB), 0.8);
   opacity: 1;
 }
 .service__details {

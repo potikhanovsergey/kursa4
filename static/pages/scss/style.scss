@@ -60,7 +60,7 @@ h1, h2, h3 {
 a {
   text-decoration: none;
   color: var(--black);
-  transition: var(--transition);
+  transition: 0.4s ease color;
 }
 
 .btn-dark {
@@ -148,10 +148,14 @@ section {
   color: var(--gray);
   text-transform: uppercase;
   margin: 0 auto;
-  transition: var(--transition);
+  transition: 0.4s ease color;
   &:hover {
     color: var(--black);
   }
+}
+
+.errorlist {
+  color: white;
 }
 
 .home-heading {
