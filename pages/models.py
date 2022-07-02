@@ -18,16 +18,16 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    user = models.CharField(max_length=50, default='Аноним')
+    user_id = models.CharField(max_length=50, default='Аноним')
     message = models.CharField(max_length=300)
     date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(null=True)
     history = HistoricalRecords()
 
-
     def __str__(self):
-        return self.user.username + ' - ' + str(self.date)
+        return self.user + ' - ' + str(self.date)
 
 class Service(models.Model):
     title = models.CharField(max_length=30)

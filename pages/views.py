@@ -15,10 +15,13 @@ from django.db.models import Q
 from datetime import datetime, timedelta, date
 from rest_framework.response import Response
 
-
+from django.core import serializers
+from django.forms.models import model_to_dict
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 class StandardResultsSetPagination(pagination.PageNumberPagination):
-    page_size = 3
+    page_size = 6
     page_size_query_param = 'page_size'
     max_page_size = 1000
 
@@ -150,17 +153,41 @@ class ServicesTemplateView(ListView):
     context_object_name = 'services'
     template_name = 'services.html'
 
+@method_decorator(csrf_exempt, name='dispatch')
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    pagination_class = StandardResultsSetPagination
+    pagination_class = None
+    authentication_classes = []
+    permission_classes = ()
+
+    action_serializers = {
+        'new_comment': CommentSerializer,
+    }
 
     @action(methods=['GET'], detail=False)
     def get_authors(self, request, **kwargs):
         authors = Post.objects.values_list('author', flat=True)
         authors = set(authors)
         return Response(authors)
+    
+    @action(methods=['GET'], detail=True)
+    def comments(self, request, **kwargs):
+      post = self.get_object()
+      comments = Comment.objects.filter(post=post).values()
+      return Response(comments)
 
+    @action(detail=True, methods=['POST'])
+    def new_comment(self, request, pk=None):
+      serializer = CommentSerializer(data=request.data)
+      if (serializer.is_valid()):
+        serializer.save()
+        id = serializer.data['id']
+        return Response(id)
+      else:
+        return Response(serializer.errors,
+          status=status.HTTP_400_BAD_REQUEST)
+    
     @action(methods=['DELETE'], detail=False)
     def delete_today_posts(self, request, **kwargs):
       posts = Post.objects.filter(Q(date=date.today()))
@@ -171,21 +198,34 @@ class PostViewSet(viewsets.ModelViewSet):
       posts = Post.objects.filter(Q(title__startswith="31"))
       return Response(posts.delete())
 
-# Наборы представлений описывают поведение представлений
+    def get_serializer_class(self):
+      if hasattr(self, 'action_serializers'):
+          return self.action_serializers.get(self.action, self.serializer_class)
 
-class CommentsList(generics.ListAPIView):
+      return super(MyModelViewSet, self).get_serializer_class()
+
+@method_decorator(csrf_exempt, name='dispatch')
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    filter_fields = (
-        'message',
-    )
-    def get_queryset(self):
-        """
-        This view should return a list of all the comments
-        for the currently authenticated user.
-        """
-        user = self.request.user
-        return Comment.objects.filter(user=user)
+    pagination_class = None
+    authentication_classes = []
+    permission_classes = ()
 
+    def delete(self, request, pk, format=None):
+      comment = self.get_object(pk)
+      return Response(1)
+    
+    def update(self, request, *args, **kwargs):
+      instance = self.get_object()
+      instance.message = request.data.get("message")
+      instance.save()
+
+      # serializer = self.get_serializer(data=instance)
+      serializer = CommentSerializer(instance, data=request.data)
+      serializer.is_valid(raise_exception=True)
+      self.perform_update(serializer)
+      return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -214,3 +254,4 @@ class UserViewSet(viewsets.ModelViewSet):
             return self.action_serializers.get(self.action, self.serializer_class)
 
         return super(MyModelViewSet, self).get_serializer_class()
+

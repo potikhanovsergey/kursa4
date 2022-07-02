@@ -16,6 +16,7 @@ from django.conf.urls.static import static
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+import datetime
 
 sentry_sdk.init(
     dsn='https://da9d9d2699f04d69a0162e1524533c83@o1248533.ingest.sentry.io/6408550',
@@ -38,8 +39,12 @@ SECRET_KEY = 'flk%b1p&8zxr_dvg-=7%)z@r*@6dacndu0_%68m@-gkut#-1ia'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'http://localhost:3000']
 
+
+CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -56,17 +61,18 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'simple_history',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
     # Используйте стандартные Django  `django.contrib.auth` разрешения,
     # или разрешите доступ только для чтения для неаутентифицированных пользователей.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 3
+    'PAGE_SIZE': 9,
 }
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
@@ -76,11 +82,11 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'pages_project.urls'

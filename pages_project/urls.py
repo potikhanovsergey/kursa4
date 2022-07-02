@@ -27,15 +27,16 @@ import json
 from datetime import datetime, timedelta, date
 from pages.serializers import UserSerializer, UsernameSerializer
 from django.db.models import Q
-from pages.views import PostViewSet, CommentsList, UserViewSet
+from pages.views import PostViewSet, CommentViewSet, UserViewSet
 from sentry_sdk import capture_exception
-
+from rest_framework_jwt.views import obtain_jwt_token
 
 
 # Роутеры позволяют быстро и просто сконфигурировать адреса.
 router = routers.DefaultRouter()
 router.register(r'api/posts', PostViewSet)
 router.register(r'api/users', UserViewSet)
+router.register(r'api/comments', CommentViewSet)
 
 
 # Привяжите конфигурацию URL, используя роутеры.
@@ -54,7 +55,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
     re_path(r'^', include(router.urls)),
-    re_path(r'^api/comments', CommentsList.as_view()),
     path('sentry-debug/', trigger_error),
 ]
 
