@@ -37,7 +37,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'flk%b1p&8zxr_dvg-=7%)z@r*@6dacndu0_%68m@-gkut#-1ia'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*', 'http://localhost:3000']
 
@@ -171,12 +171,19 @@ USE_TZ = True
 
 
 
-STATIC_ROOT = ''
+# STATIC_ROOT = path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    path.join(BASE_DIR, "static"),
-)
+# STATICFILES_DIRS = [path.join(BASE_DIR, "static"),
+#   #'/var/www/static/',
+# ]
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        path.join(BASE_DIR, 'static')
+    ]
+else:
+    STATIC_ROOT = path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
